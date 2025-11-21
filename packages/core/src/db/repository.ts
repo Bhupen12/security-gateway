@@ -44,7 +44,7 @@ export class SecurityRepository{
    * Hashes the password before storing.
    */
   public async seedAdmin(username: string, plainPassword: string): Promise<void>{
-    const exist = this.redis.hexists('gateway:admins', username)
+    const exist = await this.redis.hexists('gateway:admins', username)
     if(!exist){
       const hashPassword = await bcrypt.hash(plainPassword, 10);
       await this.redis.hset('gateway:admins', username, hashPassword);
