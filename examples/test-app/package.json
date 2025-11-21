@@ -1,0 +1,17 @@
+{
+  "name": "test-app",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node server.ts"
+  },
+  "dependencies": {
+    "@bhupen/gateway": "workspace:*",
+    "express": "^4.18.2",
+    "ts-node": "^10.9.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

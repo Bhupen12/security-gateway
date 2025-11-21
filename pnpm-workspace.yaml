@@ -1,0 +1,5 @@
+packages:
+  # Core logic aur UI packages
+  - 'packages/*'
+  # Testing : example apps
+  - 'examples/*'
