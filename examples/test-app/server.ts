@@ -1,28 +1,27 @@
-// examples/test-app/server.ts
+import express from 'express';
 import { SecurityGateway } from '@bhupen/gateway';
 
-const redisUrl = 'redis://localhost:6379'
+const app = express();
+const REDIS_URL = 'redis://localhost:6379';
 
-async function main(){
-  console.log('testing redis logic...');
+async function start() {
+  const gateway = new SecurityGateway({ 
+    redisUrl: REDIS_URL,
+    limiter: { capacity: 2, refillRate: 0.02 } 
+  });
+  
+  const repo = gateway.getRepository();
+  await repo.unblockIp('127.0.0.1');
 
-  const gateway = new SecurityGateway({
-    redisUrl: redisUrl
+  app.use(gateway.middleware() as any);
+
+  app.get('/', (req, res) => {
+    res.send(`Success! Tokens remaining: ${res.getHeader('X-RateLimit-Remaining')}`);
   });
 
-  const repo = gateway.getRepository();
-
-  if(repo){
-    const testIp = "192.168.1.50";
-    await repo.blockIp(testIp);
-    const isBlocked = await repo.isIpBlocked(testIp);
-    console.log(`IP ${testIp} blocked? : ${isBlocked}`); // Should be true
-
-    // Test 2: Seed Admin
-    await repo.seedAdmin("admin", "secret123");
-    const isValid = await repo.validateAdmin("admin", "secret123");
-    console.log(`Admin login valid? : ${isValid}`); // Should be true
-  }
+  app.listen(3000, () => {
+    console.log('🚀 Server running on http://localhost:3000');
+  });
 }
 
-main();
+start();
