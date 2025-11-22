@@ -7,6 +7,8 @@ export const requestExtractor = (req: SecurityRequest, res: Response, next: Next
 
   if(Array.isArray(ip)){
     ip = ip[0];
+  } else if (typeof ip === 'string') {
+    ip = ip.split(',')[0].trim();
   }
 
   if (ip === '::1') ip = '127.0.0.1';
