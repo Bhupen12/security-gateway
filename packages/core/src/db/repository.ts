@@ -62,4 +62,8 @@ export class SecurityRepository{
     
     return await bcrypt.compare(plainPassword, storedHash);
   }
+
+  public async getAllBlockedIps(): Promise<string[]> {
+    return await this.redis.smembers('gateway:blocked:ips');
+  }
 }

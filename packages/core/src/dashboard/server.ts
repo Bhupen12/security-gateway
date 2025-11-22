@@ -32,7 +32,47 @@ export const startDashboardServer = (
     }
   })
 
+  app.get('/api/blocked-ips', authenticateToken, async (req, res) => {
+    const ips = await repo.getAllBlockedIps(); 
+    res.json({ ips });
+  });
+
+  // 2. Block an IP
+  app.post('/api/block-ip', authenticateToken, async (req, res) => {
+    const { ip } = req.body;
+    if (ip) {
+      await repo.blockIp(ip);
+      res.json({ success: true, message: `Blocked ${ip}` });
+    } else {
+      res.status(400).json({ error: 'IP is required' });
+    }
+  });
+
+  // 3. Unblock an IP
+  app.post('/api/unblock-ip', authenticateToken, async (req, res) => {
+    const { ip } = req.body;
+    if (ip) {
+      await repo.unblockIp(ip);
+      res.json({ success: true, message: `Unblocked ${ip}` });
+    } else {
+      res.status(400).json({ error: 'IP is required' });
+    }
+  });
+
   app.listen(port, () => {
     console.log(`🎛️  Dashboard API running on http://localhost:${port}`);
   });
 }
+
+const authenticateToken = (req: any, res: any, next: any) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+  if (!token) return res.sendStatus(401); // No token
+
+  jwt.verify(token, JWT_SECRET, (err: any, user: any) => {
+    if (err) return res.sendStatus(403); // Invalid token
+    req.user = user;
+    next();
+  });
+};
