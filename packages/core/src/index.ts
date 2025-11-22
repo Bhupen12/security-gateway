@@ -1,9 +1,11 @@
 import { RedisClient } from "./db/redis";
 import { SecurityRepository } from "./db/repository";
+import { requestExtractor } from "./middleware/extractor";
+import { createGuardMiddleware } from "./middleware/guard";
 
 export class SecurityGateway{
   private redisClient: RedisClient;
-  private repository: SecurityRepository | null = null;
+  private repository: SecurityRepository;
 
   constructor(config: { redisUrl: string }){
     this.redisClient = new RedisClient();
@@ -13,6 +15,15 @@ export class SecurityGateway{
     this.repository = new SecurityRepository(client);
 
     console.log("✅ Security Gateway Connected to Redis!");
+  }
+
+  public middleware() {
+    const guard = createGuardMiddleware(this.repository);
+
+    return [
+      requestExtractor,
+      guard
+    ];
   }
 
   public getRepository(){

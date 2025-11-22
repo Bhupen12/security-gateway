@@ -21,4 +21,5 @@ export const requestExtractor = (req: SecurityRequest, res: Response, next: Next
   // get country code
   const geo = geoip.lookup(ip);
   req.clientCountry = geo ? geo.country : 'UNKNOWN';
+  next()
 }
