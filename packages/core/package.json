@@ -13,13 +13,17 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
     "geoip-lite": "^1.4.10",
-    "ioredis": "^5.8.2"
+    "ioredis": "^5.8.2",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^3.0.0",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
     "@types/geoip-lite": "^1.4.4",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.10.1"
   }
 }
