@@ -1,3 +1,4 @@
+import { startDashboardServer } from "./dashboard/server";
 import { RedisClient } from "./db/redis";
 import { SecurityRepository } from "./db/repository";
 import { requestExtractor } from "./middleware/extractor";
@@ -40,5 +41,9 @@ export class SecurityGateway{
 
   public getRepository(){
     return this.repository;
+  }
+
+  public startDashboard(port: number) {
+    startDashboardServer(port, this.repository);
   }
 }
