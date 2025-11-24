@@ -17,7 +17,7 @@ importers:
 
   examples/test-app:
     dependencies:
-      '@bhupen/gateway':
+      '@alien-ai/gateway':
         specifier: workspace:*
         version: link:../../packages/core
       express:

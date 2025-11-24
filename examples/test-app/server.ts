@@ -1,5 +1,5 @@
 import express from 'express';
-import { SecurityGateway } from '@bhupen/gateway';
+import { SecurityGateway } from '@alien-ai/gateway';
 
 const app = express();
 const REDIS_URL = 'redis://localhost:6379';

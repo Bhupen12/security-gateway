@@ -125,7 +125,7 @@ Follow this plan incrementally to build the system.
 How a developer will use this package:
 
     import express from 'express';
-    import { SecurityGateway } from '@bhupen/gateway';
+    import { SecurityGateway } from '@alien-ai/gateway';
 
     const app = express();
 
