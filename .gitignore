@@ -1,2 +1,32 @@
+# Dependencies
 node_modules/
+.pnpm-store/
+
+# Build Outputs (Yeh generate hote hain, commit nahi karte)
 dist/
+build/
+packages/ui/dist/
+packages/core/public/  # UI ka build output hai, source code nahi
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Environment Variables (SABSE IMPORTANT 🛑)
+.env
+.env.local
+.env.*.local
+
+# IDE & System Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+
+# Turbo Cache
+.turbo/

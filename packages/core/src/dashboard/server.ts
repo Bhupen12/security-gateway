@@ -2,6 +2,7 @@ import { SecurityRepository } from "../db/repository";
 import express from "express";
 import cors from "cors";
 import jwt from "jsonwebtoken";
+import path from 'path';
 
 const JWT_SECRET = 'super-secret-key-change-this-in-prod';
 
@@ -13,6 +14,9 @@ export const startDashboardServer = (
 
   app.use(cors());
   app.use(express.json());
+
+  const publicPath = path.join(__dirname, '../../public');
+  app.use(express.static(publicPath));
 
   app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
@@ -57,6 +61,10 @@ export const startDashboardServer = (
     } else {
       res.status(400).json({ error: 'IP is required' });
     }
+  });
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(publicPath, 'index.html'));
   });
 
   app.listen(port, () => {
